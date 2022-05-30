@@ -1,0 +1,19 @@
+Basic : 30 Points
+    [X] 1. Display list of products available in a JSON (provided below and can be initialised).
+    [X] 2. The list shall display all products by default.
+    [X] 3. However, there should be a provision to select category (p_category) and the Product list
+            shall change based on the selection.
+    
+    [X] 4. Allow the user to enter the quantity.
+
++20 Points:
+
+    [X] 5. Add the quantity input to the JSON
+    [.] 6. Display the JSON in a dialog on submit 
+
++20 Points:
+    [X] 7. Hardcode an image in the above list and provide a visually appealing view
+    [] 8. Bring professionalism (shadow/animation/3D/effects) [but not to spoil the look and feel]
+
++30 Points:
+    [X] 9. Read the JSON text from an external file dynamically rather hardcoding it.
