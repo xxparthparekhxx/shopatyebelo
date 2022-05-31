@@ -6,7 +6,7 @@
         "p_availability": 1,
         "p_details": "Imported from Swiss",
         "p_category": "Premium",
-        "image": "https://i.pinimg.com/originals/7e/dc/25/7edc25ee22bd7fe68ca963977729d174.png"
+        "image": "https://firebasestorage.googleapis.com/v0/b/webfo-81948.appspot.com/o/16-red-apple-png-image.png?alt=media&token=d08e3a1c-9fce-44ef-a64e-7ea78bd4c8a5"
     },
     {
         "p_name": "Mango",
@@ -15,14 +15,14 @@
         "p_availability": 1,
         "p_details": "Farmed at Selam",
         "p_category": "Tamilnadu",
-        "image": "https://www.clipartmax.com/png/middle/217-2176395_alphonso-mango-png.png"
+        "image": "https://firebasestorage.googleapis.com/v0/b/webfo-81948.appspot.com/o/1-2-mango-png_800x800.png?alt=media&token=479626c3-eb0c-4ba7-bd1f-6a9838c88393"
     },
     {
         "p_name": "Bananna",
         "p_id": 3,
         "p_cost": 5,
         "p_availability": 0,
-        "image": "https://i.pinimg.com/originals/7a/7d/c7/7a7dc7cb375a95c3de6139bcc54a4fff.png"
+        "image": "https://firebasestorage.googleapis.com/v0/b/webfo-81948.appspot.com/o/8-banana-png-image.png?alt=media&token=6b0b7318-c58d-4472-881d-5cf2b0728848"
     },
     {
         "p_name": "Orange",
