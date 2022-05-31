@@ -10,25 +10,25 @@ class CartProvider with ChangeNotifier {
 
   void loadCart() async {
     // Load data From Shared Preferences
-    // and set it to the items list
-    String key = 'cart';
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? cart = prefs.getString(key);
+    // // and set it to the items list
+    // String key = 'cart';
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String? cart = prefs.getString(key);
 
-    if (cart != null) {
-      items = [];
-      List<dynamic> cartItems = jsonDecode(cart);
-      List<Future<CartItem>> futures = [];
-      for (var item in cartItems) {
-        futures.add(CartItem.fromJson(item));
-      }
-      for (var ele in futures) {
-        items.add(await ele);
-      }
-    } else {
-      await prefs.setString(key, [].toString());
-    }
-    notifyListeners();
+    // if (cart != null) {
+    //   items = [];
+    //   List<dynamic> cartItems = jsonDecode(cart);
+    //   List<Future<CartItem>> futures = [];
+    //   for (var item in cartItems) {
+    //     futures.add(CartItem.fromJson(item));
+    //   }
+    //   for (var ele in futures) {
+    //     items.add(await ele);
+    //   }
+    // } else {
+    //   await prefs.setString(key, [].toString());
+    // }
+    // notifyListeners();
   }
 
   updatePrefs() async {

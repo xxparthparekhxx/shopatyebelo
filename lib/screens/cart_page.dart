@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/cart_provider.dart';
@@ -14,9 +15,12 @@ class CartPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 40),
-            const Text(
-              'Your Cart',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Your Cart',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
             ),
             const SizedBox(height: 20),
             if (cp.items.isEmpty) const Text('No items in cart'),
@@ -58,6 +62,7 @@ class CartPage extends StatelessWidget {
               },
             ).toList(),
             const SizedBox(height: 20),
+            if (cp.items.isNotEmpty) const Divider(),
             if (cp.items.isNotEmpty)
               ...cp.items.map((e) => ListTile(
                     leading: Text("${e.quantity} X "),
@@ -77,7 +82,44 @@ class CartPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Material(
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (c) => Scaffold(
+                              appBar: AppBar(
+                                title: const Text('Json Data'),
+                              ),
+                              body: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.black87,
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      padding: const EdgeInsets.all(15),
+                                      child: Text(
+                                        cp.cartItems,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        FloatingActionButton(
+                                          onPressed: () {},
+                                          child: const Icon(Icons.copy),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ))));
+                    },
                     child: Container(
                       width: double.infinity,
                       alignment: Alignment.center,
