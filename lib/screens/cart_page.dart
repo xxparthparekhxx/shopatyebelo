@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/cart_provider.dart';
 
@@ -23,37 +24,65 @@ class CartPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            if (cp.items.isEmpty) const Text('No items in cart'),
+            if (cp.items.isEmpty) const Center(child: Text('No items in cart')),
             ...cp.items.map(
               (e) {
                 var item = e;
                 return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          padding: const EdgeInsets.all(10),
-                          height: 100,
-                          width: 100,
-                          child: item.product.image),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 80,
-                        width: 1,
-                        color: Colors.black87,
-                      ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              padding: const EdgeInsets.all(10),
+                              height: 100,
+                              width: 100,
+                              child: item.product.image),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 80,
+                            width: 1,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(item.product.name),
+                              Text(item.product.details),
+                              Text('₹ ${item.product.cost}'),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(item.product.name),
-                          Text(item.product.details),
-                          Text('₹ ${item.product.cost}'),
+                          IconButton(
+                              onPressed: () {
+                                Provider.of<CartProvider>(context,
+                                        listen: false)
+                                    .incrementQuantity(item.product);
+                              },
+                              icon: const Icon(Icons.add)),
+                          Text("X  ${item.quantity}"),
+                          IconButton(
+                              onPressed: () {
+                                Provider.of<CartProvider>(context,
+                                        listen: false)
+                                    .decrementQuantity(item.product);
+                              },
+                              icon: const Icon(Icons.remove))
                         ],
                       ),
                     )
@@ -111,7 +140,14 @@ class CartPage extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         FloatingActionButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Clipboard.setData(ClipboardData(
+                                                text: cp.cartItems));
+                                            ScaffoldMessenger.of(c)
+                                                .showSnackBar(const SnackBar(
+                                                    content: Text(
+                                                        "Json data copied to clipboard")));
+                                          },
                                           child: const Icon(Icons.copy),
                                         ),
                                       ],

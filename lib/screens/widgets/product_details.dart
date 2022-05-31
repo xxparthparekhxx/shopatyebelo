@@ -21,32 +21,43 @@ class ProductDetails extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(19.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                decoration: BoxDecoration(border: Border.all(width: 1)),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(10)),
                 width: ss.width * 0.5,
+                height: ss.height * 0.2,
                 child: product.image,
               ),
-              Row(
+              Column(
                 children: [
-                  Text(
-                    product.name,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                  Row(
+                    children: [
+                      Text(
+                        product.name,
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(product.details,
-                      style:
-                          const TextStyle(fontSize: 18, color: Colors.black87))
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    '₹ ${product.cost}',
-                    style: const TextStyle(fontSize: 24, color: Colors.black),
+                  Row(
+                    children: [
+                      Text(product.details,
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black87))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '₹ ${product.cost}',
+                        style:
+                            const TextStyle(fontSize: 24, color: Colors.black),
+                      ),
+                    ],
                   ),
                 ],
               ),

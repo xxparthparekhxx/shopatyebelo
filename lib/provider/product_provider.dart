@@ -14,8 +14,8 @@ class ProductProvider with ChangeNotifier {
 
   getProducts() async {
     //setting default category
-    categoriesFound.add(defaultCategory);
 
+    categoriesFound.add(defaultCategory);
     //loading data from json
     String rawData = await rootBundle.loadString(
       "lib/assets/products.json",
@@ -39,6 +39,7 @@ class ProductProvider with ChangeNotifier {
       categoriesFound
           .add(product.category); // add found product categories to the list
     }
+
     notifyListeners();
   }
 
