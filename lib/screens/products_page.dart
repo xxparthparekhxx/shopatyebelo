@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/product_provider.dart';
 import 'package:shopatyebelo/screens/widgets/category_tile.dart';
 import 'package:shopatyebelo/screens/widgets/product_tile.dart';
+import 'package:shopatyebelo/screens/widgets/search.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({Key? key}) : super(key: key);
@@ -10,28 +11,41 @@ class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var pp = Provider.of<ProductProvider>(context);
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-              flex: 1,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: pp.categories.length,
-                  itemBuilder: (ctx, idx) => CategoryItem(
-                        category: pp.categories[idx],
-                      ))),
-          Expanded(
-            flex: 9,
-            child: GridView.builder(
-              itemCount: pp.productList.length,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 300),
-              itemBuilder: (ctx, idx) =>
-                  ProductTile(product: pp.productList[idx]),
-            ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Column(
+            children: [
+              const Search(),
+              SizedBox(
+                  height: 50,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: pp.categories.length,
+                      itemBuilder: (ctx, idx) => CategoryItem(
+                            category: pp.categories[idx],
+                          ))),
+              Expanded(
+                flex: 9,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView.builder(
+                    itemCount: pp.productList.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 250,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16),
+                    itemBuilder: (ctx, idx) =>
+                        ProductTile(product: pp.productList[idx]),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

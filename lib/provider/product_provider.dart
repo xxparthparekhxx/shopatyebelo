@@ -7,6 +7,7 @@ import 'package:shopatyebelo/models/product.dart';
 class ProductProvider with ChangeNotifier {
   List<Product> products = [];
   Set<String> categoriesFound = {};
+  String qurey = '';
 
   String defaultCategory = "All";
   String currentCategory = "All";
@@ -41,6 +42,11 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  set Search(String q) {
+    qurey = q;
+    notifyListeners();
+  }
+
   set filter(String e) {
     //set filter to the current category
     currentCategory = e;
@@ -48,15 +54,24 @@ class ProductProvider with ChangeNotifier {
   }
 
   List<Product> get productList {
+    List<Product> tempList = [];
     if (currentCategory == defaultCategory) {
       //default category
-      return products;
+      tempList = products;
     } else {
       //filter by category found in json
-      return products
+      tempList = products
           .where((element) => element.category == currentCategory)
           .toList();
     }
+    if (qurey != '') {
+      //filter by qurey
+      tempList = tempList
+          .where((element) =>
+              element.name.toLowerCase().startsWith(qurey.toLowerCase()))
+          .toList();
+    }
+    return tempList;
   }
 
   List<String> get categories {

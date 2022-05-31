@@ -17,6 +17,7 @@ class CategoryItem extends StatelessWidget {
         padding: const EdgeInsets.only(left: 8.0, right: 8),
         child: Material(
           child: InkWell(
+            borderRadius: BorderRadius.circular(10),
             onTap: () {
               Provider.of<ProductProvider>(context, listen: false).filter =
                   category;

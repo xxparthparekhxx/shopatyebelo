@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/cart_provider.dart';
 import 'package:shopatyebelo/provider/product_provider.dart';
-import 'package:shopatyebelo/screens/products_page.dart';
+import 'package:shopatyebelo/screens/screencontroller.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.green,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarIconBrightness: Brightness.light,
+      systemNavigationBarContrastEnforced: true));
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -18,9 +26,11 @@ class MyApp extends StatelessWidget {
             create: (_) => CartProvider(),
           )
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
+          theme: ThemeData(primarySwatch: Colors.green),
           title: 'Shop App',
-          home: ProductsPage(),
+          debugShowCheckedModeBanner: false,
+          home: const ScreenController(),
         ));
   }
 }
