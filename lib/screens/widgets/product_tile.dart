@@ -26,7 +26,7 @@ class ProductTile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              product.image,
+              Expanded(child: product.image),
               Stack(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 alignment: Alignment.bottomCenter,

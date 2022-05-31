@@ -17,13 +17,13 @@ class Product {
   static Future<Product> fromJson(Map<String, dynamic> json) async {
     var image = await http.get(Uri.parse(json['image']));
     return Product(
-      json['p_name'].toString(),
+      json['p_name'] as String? ?? "",
       json['p_id'] as int,
       json['p_cost'] as int,
       json['p_availability'] as int,
-      json['p_details'].toString(),
+      json['p_details'] as String? ?? "",
       json['p_category'] as String? ?? "All",
-      Expanded(child: Image.memory(image.bodyBytes)),
+      Image.memory(image.bodyBytes),
       json['image'].toString(),
     );
   }

@@ -18,12 +18,17 @@ class CartProvider with ChangeNotifier {
     if (cart != null) {
       items = [];
       List<dynamic> cartItems = jsonDecode(cart);
+      List<Future<CartItem>> futures = [];
       for (var item in cartItems) {
-        items.add(await CartItem.fromJson(item));
+        futures.add(CartItem.fromJson(item));
+      }
+      for (var ele in futures) {
+        items.add(await ele);
       }
     } else {
       await prefs.setString(key, [].toString());
     }
+    notifyListeners();
   }
 
   updatePrefs() async {
@@ -38,7 +43,11 @@ class CartProvider with ChangeNotifier {
 
   addItem(Product p) {
     if (items.map((e) => e.product.id).toList().contains(p.id)) {
-      items.firstWhere((element) => element.product == p).quantity++;
+      items
+          .firstWhere(
+            (element) => element.product == p,
+          )
+          .quantity++;
     } else {
       items.add(CartItem(p, 1));
     }
