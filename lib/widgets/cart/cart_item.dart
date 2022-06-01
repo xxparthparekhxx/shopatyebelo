@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/models/cartitem.dart';
 import 'package:shopatyebelo/provider/cart_provider.dart';
+import 'package:shopatyebelo/styles.dart';
+import 'package:shopatyebelo/widgets/cart/buttons.dart';
 
 class CartItemWidget extends StatelessWidget {
   const CartItemWidget({Key? key, required this.item}) : super(key: key);
   final CartItem item;
-  final semiBold = const TextStyle(fontWeight: FontWeight.w600);
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +49,10 @@ class CartItemWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item.product.name, style: semiBold),
+                            Text(item.product.name, style: TextS.semiBold),
                             Text(item.product.details, softWrap: true),
-                            Text('₹ ${item.product.cost}', style: semiBold),
+                            Text('₹ ${item.product.cost}',
+                                style: TextS.semiBold),
                           ],
                         ),
                       ),
@@ -65,27 +67,9 @@ class CartItemWidget extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                          color: Colors.green,
-                          splashColor: Colors.green,
-                          tooltip: item.product.availability > 0
-                              ? "Add more Product"
-                              : "Out of Stock",
-                          onPressed: item.product.availability > 0
-                              ? () {
-                                  Provider.of<CartProvider>(context,
-                                          listen: false)
-                                      .incrementQuantity(item.product, context);
-                                }
-                              : null,
-                          icon: const Icon(Icons.add)),
-                      Text("X  ${item.quantity}", style: semiBold),
-                      IconButton(
-                          color: Colors.red,
-                          onPressed: () =>
-                              Provider.of<CartProvider>(context, listen: false)
-                                  .decrementQuantity(item.product, context),
-                          icon: const Icon(Icons.remove))
+                      IncrementQuantity(item: item),
+                      Text("X  ${item.quantity}", style: TextS.semiBold),
+                      DecrementButton(item: item)
                     ],
                   ),
                 ),

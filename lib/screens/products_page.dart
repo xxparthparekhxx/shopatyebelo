@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/product_provider.dart';
-import 'package:shopatyebelo/widgets/category_tile.dart';
-import 'package:shopatyebelo/widgets/product_tile.dart';
-import 'package:shopatyebelo/widgets/search.dart';
+import 'package:shopatyebelo/widgets/product/category_tile.dart';
+import 'package:shopatyebelo/widgets/product/product_tile.dart';
+import 'package:shopatyebelo/widgets/product/search.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({Key? key}) : super(key: key);
@@ -22,6 +22,7 @@ class ProductsPage extends StatelessWidget {
                 const Search(),
                 SizedBox(
                     height: 50,
+                    // Categories
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: pp.categories.length,
@@ -33,6 +34,7 @@ class ProductsPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GridView.builder(
+                      // Products Grid
                       itemCount: pp.productList.length,
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(

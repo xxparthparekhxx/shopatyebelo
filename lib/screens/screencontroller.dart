@@ -37,6 +37,7 @@ class _ScreenControllerState extends State<ScreenController> {
     return Scaffold(
       body: screens.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        // Bottom Navigation
         items: [
           const BottomNavigationBarItem(
             icon: Icon(Icons.explore),

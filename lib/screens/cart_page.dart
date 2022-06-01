@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/cart_provider.dart';
 import 'package:shopatyebelo/screens/json_display.dart';
-import 'package:shopatyebelo/widgets/cart_item.dart';
+import 'package:shopatyebelo/styles.dart';
+import 'package:shopatyebelo/widgets/cart/cart_item.dart';
 import 'package:shopatyebelo/widgets/green_button.dart';
-import 'package:shopatyebelo/widgets/product_total_count.dart';
+import 'package:shopatyebelo/widgets/cart/product_total_count.dart';
 
 class CartPage extends StatelessWidget {
   final Function(int)? changePage;
@@ -28,7 +29,7 @@ class CartPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            if (cp.items.isEmpty)
+            if (cp.items.isEmpty) ...[
               Center(
                   child: Image.network(
                 "https://shvetdhara.com/img/ecart.png",
@@ -42,56 +43,34 @@ class CartPage extends StatelessWidget {
                         );
                 },
               )),
-            if (cp.items.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  child: InkWell(
-                    onTap: () {
-                      if (changePage != null) changePage!(0);
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.green),
-                      child: const Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text("<< Explore Products",
-                            style: TextStyle(color: Colors.white)),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              GreenButton(
+                  onPressed: () {
+                    if (changePage != null) changePage!(0);
+                  },
+                  child: const Text("<< Explore Products", style: TextS.white))
+            ],
             ...cp.items.map(
               (e) => CartItemWidget(item: e),
             ),
             const SizedBox(height: 20),
-            if (cp.items.isNotEmpty) const Divider(),
-            if (cp.items.isNotEmpty)
+            if (cp.items.isNotEmpty) ...[
+              const Divider(),
               ...cp.items.map((e) => ProductsTotalCount(e: e)),
-            if (cp.items.isNotEmpty)
               ListTile(
-                title: const Text(
-                  "Total",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                // find the total for all items in cart
+                title: const Text("Total", style: TextS.bold),
+                // total for all items in cart
                 trailing: Text(
                   cp.totalAmount.toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: TextS.bold,
                 ),
               ),
-            if (cp.items.isNotEmpty)
               GreenButton(
-                  child: const Text("Checkout",
-                      style: TextStyle(color: Colors.white)),
+                  child: const Text("Checkout", style: TextS.white),
                   onPressed: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (c) => JsonDisplayPage(cp: cp)));
                   })
+            ]
           ],
         ),
       ),

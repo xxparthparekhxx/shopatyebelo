@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopatyebelo/models/product.dart';
-import 'package:shopatyebelo/widgets/product_details.dart';
+import 'package:shopatyebelo/widgets/product/product_details.dart';
 
 class ProductTile extends StatelessWidget {
   const ProductTile({Key? key, required this.product}) : super(key: key);
