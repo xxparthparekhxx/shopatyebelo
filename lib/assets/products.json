@@ -12,7 +12,7 @@
         "p_name": "Mango",
         "p_id": 2,
         "p_cost": 50,
-        "p_availability": 1,
+        "p_availability": 30,
         "p_details": "Farmed at Selam",
         "p_category": "Tamilnadu",
         "image": "https://firebasestorage.googleapis.com/v0/b/webfo-81948.appspot.com/o/1-2-mango-png_800x800.png?alt=media&token=479626c3-eb0c-4ba7-bd1f-6a9838c88393"
@@ -28,7 +28,7 @@
         "p_name": "Orange",
         "p_id": 4,
         "p_cost": 25,
-        "p_availability": 1,
+        "p_availability": 60,
         "p_details": "from Nagpur",
         "p_category": "Premium",
         "image": "https://cdn.pixabay.com/photo/2016/02/23/17/42/orange-1218158_1280.png"

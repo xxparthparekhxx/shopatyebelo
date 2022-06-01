@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/cart_provider.dart';
+import 'package:shopatyebelo/screens/json_display.dart';
+import 'package:shopatyebelo/widgets/cart_item.dart';
+import 'package:shopatyebelo/widgets/green_button.dart';
+import 'package:shopatyebelo/widgets/product_total_count.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({Key? key}) : super(key: key);
+  final Function(int)? changePage;
+  const CartPage({Key? key, this.changePage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,137 +28,28 @@ class CartPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            if (cp.items.isEmpty) const Center(child: Text('No items in cart')),
-            ...cp.items.map(
-              (e) {
-                var item = e;
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              padding: const EdgeInsets.all(10),
-                              height: 100,
-                              width: 100,
-                              child: item.product.image),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 80,
-                            width: 1,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(item.product.name),
-                              Text(item.product.details),
-                              Text('₹ ${item.product.cost}'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .incrementQuantity(item.product);
-                              },
-                              icon: const Icon(Icons.add)),
-                          Text("X  ${item.quantity}"),
-                          IconButton(
-                              onPressed: () {
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .decrementQuantity(item.product);
-                              },
-                              icon: const Icon(Icons.remove))
-                        ],
-                      ),
-                    )
-                  ],
-                );
-              },
-            ).toList(),
-            const SizedBox(height: 20),
-            if (cp.items.isNotEmpty) const Divider(),
-            if (cp.items.isNotEmpty)
-              ...cp.items.map((e) => ListTile(
-                    leading: Text("${e.quantity} X "),
-                    title: Text(e.product.name),
-                    trailing: Text(e.product.cost.toString()),
-                  )),
-            if (cp.items.isNotEmpty)
-              ListTile(
-                title: const Text("Total"),
-                trailing: Text(cp.items
-                    .map((e) => e.product.cost)
-                    .reduce((a, b) => a + b)
-                    .toString()),
-              ),
-            if (cp.items.isNotEmpty)
+            if (cp.items.isEmpty)
+              Center(
+                  child: Image.network(
+                "https://shvetdhara.com/img/ecart.png",
+                isAntiAlias: true,
+                color: Colors.green,
+                loadingBuilder: (context, child, progress) {
+                  return progress == null
+                      ? child
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                },
+              )),
+            if (cp.items.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Material(
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (c) => Scaffold(
-                              appBar: AppBar(
-                                title: const Text('Json Data'),
-                              ),
-                              body: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.black87,
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      padding: const EdgeInsets.all(15),
-                                      child: Text(
-                                        cp.cartItems,
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        FloatingActionButton(
-                                          onPressed: () {
-                                            Clipboard.setData(ClipboardData(
-                                                text: cp.cartItems));
-                                            ScaffoldMessenger.of(c)
-                                                .showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        "Json data copied to clipboard")));
-                                          },
-                                          child: const Icon(Icons.copy),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ))));
+                      print(changePage);
+                      if (changePage != null) changePage!(0);
                     },
                     child: Container(
                       width: double.infinity,
@@ -164,13 +59,40 @@ class CartPage extends StatelessWidget {
                           color: Colors.green),
                       child: const Padding(
                         padding: EdgeInsets.all(15.0),
-                        child: Text("Checkout",
+                        child: Text("<< Explore Products",
                             style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ),
                 ),
-              )
+              ),
+            ...cp.items.map(
+              (e) => CartItemWidget(item: e),
+            ),
+            const SizedBox(height: 20),
+            if (cp.items.isNotEmpty) const Divider(),
+            if (cp.items.isNotEmpty)
+              ...cp.items.map((e) => ProductsTotalCount(e: e)),
+            if (cp.items.isNotEmpty)
+              ListTile(
+                title: const Text(
+                  "Total",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                // find the total for all items in cart
+                trailing: Text(
+                  cp.totalAmount.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            if (cp.items.isNotEmpty)
+              GreenButton(
+                  child: const Text("Checkout",
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (c) => JsonDisplayPage(cp: cp)));
+                  })
           ],
         ),
       ),

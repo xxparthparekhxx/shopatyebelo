@@ -5,11 +5,11 @@ class Product {
   final String name;
   final int id;
   final int cost;
-  final int availability;
   final String details;
   final String category;
   final Widget image;
   final String imageUrl;
+  int availability;
 
   Product(this.name, this.id, this.cost, this.availability, this.details,
       this.category, this.image, this.imageUrl);

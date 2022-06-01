@@ -11,6 +11,10 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Product LiveProduct = Provider.of<ProductProvider>(context)
+        .productList
+        .firstWhere((element) => element.id == product.id);
+
     Size ss = MediaQuery.of(context).size;
     return Container(
       decoration: const BoxDecoration(color: Colors.green),
@@ -25,19 +29,19 @@ class ProductDetails extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1),
-                    borderRadius: BorderRadius.circular(10)),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
                 width: ss.width * 0.5,
                 height: ss.height * 0.2,
                 child: product.image,
               ),
               Column(
                 children: [
+                  const Divider(),
                   Row(
                     children: [
                       Text(
-                        product.name,
+                        LiveProduct.name,
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -45,7 +49,7 @@ class ProductDetails extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text(product.details,
+                      Text(LiveProduct.details,
                           style: const TextStyle(
                               fontSize: 18, color: Colors.black87))
                     ],
@@ -53,7 +57,7 @@ class ProductDetails extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '₹ ${product.cost}',
+                        '₹ ${LiveProduct.cost}',
                         style:
                             const TextStyle(fontSize: 24, color: Colors.black),
                       ),
@@ -65,7 +69,7 @@ class ProductDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Quantity Available ${product.availability}',
+                    'Quantity Available ${LiveProduct.availability}',
                     style: const TextStyle(fontSize: 18, color: Colors.black),
                   ),
                   if (product.availability != 0)
@@ -76,7 +80,7 @@ class ProductDetails extends StatelessWidget {
                         FloatingActionButton(
                             onPressed: () {
                               Provider.of<CartProvider>(context, listen: false)
-                                  .addItem(product);
+                                  .addItem(product, context);
                             },
                             child: const Icon(Icons.add_shopping_cart_sharp)),
                         if (Provider.of<CartProvider>(context)

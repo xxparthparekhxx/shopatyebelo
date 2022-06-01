@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopatyebelo/provider/product_provider.dart';
-import 'package:shopatyebelo/screens/widgets/category_tile.dart';
-import 'package:shopatyebelo/screens/widgets/product_tile.dart';
-import 'package:shopatyebelo/screens/widgets/search.dart';
+import 'package:shopatyebelo/widgets/category_tile.dart';
+import 'package:shopatyebelo/widgets/product_tile.dart';
+import 'package:shopatyebelo/widgets/search.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({Key? key}) : super(key: key);

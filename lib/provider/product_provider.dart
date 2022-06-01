@@ -14,7 +14,6 @@ class ProductProvider with ChangeNotifier {
 
   getProducts() async {
     //setting default category
-
     categoriesFound.add(defaultCategory);
     //loading data from json
     String rawData = await rootBundle.loadString(
@@ -44,6 +43,7 @@ class ProductProvider with ChangeNotifier {
   }
 
   set Search(String q) {
+    // Search setter
     qurey = q;
     notifyListeners();
   }
@@ -73,6 +73,13 @@ class ProductProvider with ChangeNotifier {
           .toList();
     }
     return tempList;
+  }
+
+  setProductQuantity(Product p, int updatedAvailability) {
+    //set the product quantity
+    products.firstWhere((element) => element.id == p.id).availability =
+        updatedAvailability;
+    notifyListeners();
   }
 
   List<String> get categories {
