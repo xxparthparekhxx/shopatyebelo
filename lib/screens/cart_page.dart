@@ -48,7 +48,6 @@ class CartPage extends StatelessWidget {
                 child: Material(
                   child: InkWell(
                     onTap: () {
-                      print(changePage);
                       if (changePage != null) changePage!(0);
                     },
                     child: Container(

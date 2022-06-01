@@ -6,7 +6,7 @@ import 'package:shopatyebelo/provider/product_provider.dart';
 import 'package:shopatyebelo/screens/screencontroller.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.green,
       statusBarIconBrightness: Brightness.light,
@@ -15,6 +15,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
